@@ -15,7 +15,16 @@ waiting：被连接的节点等待执行。 active：被连接的节点可以执
 MCP 协议主要包含 Client 和 Server 两部分。简单来说，Client 是使用 AI 模型的一方，它通过 MCP Client 可以给模型提供一些调用外部系统的能能力；Server 是提供外部系统调用的一方，也就是实际运行外部系统的一方。
 FastGPT MCP Server 功能允许你选择多个在 FastGPT 上构建好的应用，以 MCP 协议对外提供调用 FastGPT 应用的能力。
 目前 FastGPT 提供的 MCP server 为 SSE 通信协议，未来将会替换成 HTTP streamable。
-FastGPT 使用 MCP server link1. 创建 MCP server link登录 FastGPT 后，打开工作台，点击MCP server，即可进入管理页面，这里可以看到你创建的所有 MCP server，以及他们管理的应用数量。</description></item><item><title>使用 Gapier 快速导入Agent工具</title><link>https://doc.tryfastgpt.ai/docs/guide/dashboard/gapier/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://doc.tryfastgpt.ai/docs/guide/dashboard/gapier/</guid><description>FastGPT V4.7版本加入了工具调用，可以兼容 GPTs 的 Actions。这意味着，你可以直接导入兼容 GPTs 的 Agent 工具。
+FastGPT 使用 MCP server link1. 创建 MCP server link登录 FastGPT 后，打开工作台，点击MCP server，即可进入管理页面，这里可以看到你创建的所有 MCP server，以及他们管理的应用数量。</description></item><item><title>MCP 工具集</title><link>https://doc.tryfastgpt.ai/docs/guide/dashboard/mcp_tools/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://doc.tryfastgpt.ai/docs/guide/dashboard/mcp_tools/</guid><description>FastGPT v4.9.6 版本开始，新增了 MCP 工具集 这种新的应用类型，允许传入一个 MCP 的 SSE URL 来批量创建可被模型轻松调用的 MCP 工具，下面就来看下如何创建 MCP 工具并且让 AI 调用
+创建一个 MCP 工具集 link首先选择新建 MCP 工具集，以对接高德地图的 MCP Server 为例，高德地图 MCP Server
+需要获取到一个 MCP 地址，例 https://mcp.amap.com/sse?key=xxx
+然后填入到弹窗中的对应位置，点击后面的解析，会解析出对应的一系列工具
+这时再点击创建就能轻松创建 MCP 工具和 MCP 工具集
+测试 MCP 工具 link进入到 MCP 工具集内部，能够对每个单独的 MCP 工具进行调试
+以 maps_weather 这个查询天气的工具为例，点击运行，可以看到能够获得杭州的具体天气
+模型调用工具 link调用单个工具 link 选中 maps_weather 和 maps_text_search 这两个工具为例，分别问 AI 两个问题，可以看到 AI 智能地调用了相应的工具获得了需要的信息，然后根据获得的信息回答
+调用工具集 linkFastGPT 也支持调用整个 MCP 工具集，AI 会自动选取需要的工具执行，
+点击 MCP 工具集，会添加一个工具集类型的节点，使用工具调用节点连接</description></item><item><title>使用 Gapier 快速导入Agent工具</title><link>https://doc.tryfastgpt.ai/docs/guide/dashboard/gapier/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://doc.tryfastgpt.ai/docs/guide/dashboard/gapier/</guid><description>FastGPT V4.7版本加入了工具调用，可以兼容 GPTs 的 Actions。这意味着，你可以直接导入兼容 GPTs 的 Agent 工具。
 Gapier 是一个在线 GPTs Actions工具，提供了50多种现成工具，并且每天有免费额度进行测试，方便用户试用，官方地址为：https://gapier.com/。
 现在，我们开始把 Gapier 的工具导入到 FastGPT 中。
 1. 创建插件 link Step1 Step2 Step3 登录Gapier 复制相关参数 Step4 Step5 Step6 自定义请求头: Authorization
