@@ -8,8 +8,8 @@ import { getVectorsByText } from '../../ai/embedding';
 import { getEmbeddingModel, getDefaultRerankModel, getLLMModel } from '../../ai/model';
 import { MongoDatasetData } from '../data/schema';
 import {
-  DatasetDataTextSchemaType,
-  SearchDataResponseItemType
+  type DatasetDataTextSchemaType,
+  type SearchDataResponseItemType
 } from '@fastgpt/global/core/dataset/type';
 import { MongoDatasetCollection } from '../collection/schema';
 import { reRankRecall } from '../../../core/ai/rerank';
@@ -23,8 +23,8 @@ import json5 from 'json5';
 import { MongoDatasetCollectionTags } from '../tag/schema';
 import { readFromSecondary } from '../../../common/mongo/utils';
 import { MongoDatasetDataText } from '../data/dataTextSchema';
-import { ChatItemType } from '@fastgpt/global/core/chat/type';
-import { NodeInputKeyEnum } from '@fastgpt/global/core/workflow/constants';
+import { type ChatItemType } from '@fastgpt/global/core/chat/type';
+import type { NodeInputKeyEnum } from '@fastgpt/global/core/workflow/constants';
 import { datasetSearchQueryExtension } from './utils';
 import type { RerankModelItemType } from '@fastgpt/global/core/ai/model.d';
 
@@ -474,7 +474,7 @@ export async function searchDatasetData(
       ).lean()
     ]);
 
-    const set = new Map<string, number>();
+    const set = new Set<string>();
     const formatResult = results
       .map((item, index) => {
         const collection = collections.find((col) => String(col._id) === String(item.collectionId));
@@ -507,7 +507,7 @@ export async function searchDatasetData(
       .filter((item) => {
         if (!item) return false;
         if (set.has(item.id)) return false;
-        set.set(item.id, 1);
+        set.add(item.id);
         return true;
       })
       .map((item, index) => {
@@ -648,7 +648,17 @@ export async function searchDatasetData(
             ]
           };
         })
-        .filter(Boolean) as SearchDataResponseItemType[],
+        .filter((item) => {
+          if (!item) return false;
+          return true;
+        })
+        .map((item, index) => {
+          if (!item) return;
+          return {
+            ...item,
+            score: item.score.map((item) => ({ ...item, index }))
+          };
+        }) as SearchDataResponseItemType[],
       tokenLen: 0
     };
   };
